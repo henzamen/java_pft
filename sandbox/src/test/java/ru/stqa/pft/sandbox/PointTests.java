@@ -1,9 +1,9 @@
 package ru.stqa.pft.sandbox;
 
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import static ru.stqa.pft.sandbox.MyPointProgram.distance;
-
 
 public class PointTests {
 
