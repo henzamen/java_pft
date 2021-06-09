@@ -12,77 +12,120 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 public class GroupCreationTests {
-  private WebDriver wd;
+    private WebDriver wd;
 
-  @BeforeMethod(alwaysRun = true)
-  public void setUp() throws Exception {
-    System.setProperty("webdriver.gecko.driver","C:\\TestTools\\webdrivers\\geckodriver.exe");
-    wd = new FirefoxDriver();
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    wd.get("http://localhost:8080/addressbook/group.php");
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys("admin");
-    wd.findElement(By.id("LoginForm")).click();
-    wd.findElement(By.name("pass")).click();
-    wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys("secret");
-    wd.findElement(By.xpath("//input[@value='Login']")).click();
-  }
-
-  @Test
-  public void testGroupCreation() throws Exception {
-
-    wd.findElement(By.name("new")).click();
-    wd.findElement(By.name("group_name")).click();
-    wd.findElement(By.name("group_name")).clear();
-    wd.findElement(By.name("group_name")).sendKeys("MyFirstGroup");
-    wd.findElement(By.name("group_header")).click();
-    wd.findElement(By.name("group_header")).clear();
-    wd.findElement(By.name("group_header")).sendKeys("First");
-    wd.findElement(By.name("group_footer")).click();
-    wd.findElement(By.name("group_footer")).clear();
-    wd.findElement(By.name("group_footer")).sendKeys("This is my first Test with Katalon Recorder.");
-    wd.findElement(By.name("submit")).click();
-    wd.findElement(By.linkText("group page")).click();
-    wd.findElement(By.linkText("home")).click();
-    wd.findElement(By.linkText("groups")).click();
-    wd.findElement(By.name("selected[]")).click();
-    wd.findElement(By.xpath("(//input[@name='edit'])[2]")).click();
-    wd.findElement(By.name("group_footer")).click();
-    wd.findElement(By.name("group_footer")).clear();
-    wd.findElement(By.name("group_footer")).sendKeys("This is my first Test with Katalon Recorder!");
-    wd.findElement(By.name("update")).click();
-    wd.findElement(By.linkText("groups")).click();
-    wd.findElement(By.name("selected[]")).click();
-    wd.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
-    wd.findElement(By.linkText("groups")).click();
-    wd.findElement(By.linkText("Logout")).click();
-  }
-
-  @AfterMethod(alwaysRun = true)
-  public void tearDown() throws Exception {
-    wd.quit();
-
-  }
-
-  private boolean isElementPresent(By by) {
-    try {
-      wd.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
+    @BeforeMethod(alwaysRun = true)
+    public void setUp() throws Exception {
+        System.setProperty("webdriver.gecko.driver", "C:\\TestTools\\webdrivers\\geckodriver.exe");
+        wd = new FirefoxDriver();
+        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        wd.get("http://localhost:8080/addressbook/group.php");
+        login("admin", "secret");
     }
-  }
 
-  private boolean isAlertPresent() {
-    try {
-      wd.switchTo().alert();
-      return true;
-    } catch (NoAlertPresentException e) {
-      return false;
+    private void login(String username, String password) {
+        wd.findElement(By.name("user")).click();
+        wd.findElement(By.name("user")).click();
+        wd.findElement(By.name("user")).clear();
+        wd.findElement(By.name("user")).sendKeys(username);
+        wd.findElement(By.id("LoginForm")).click();
+        wd.findElement(By.name("pass")).click();
+        wd.findElement(By.name("pass")).clear();
+        wd.findElement(By.name("pass")).sendKeys(password);
+        wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
-  }
+
+    @Test
+    public void testGroupCreation() throws Exception {
+        String groupName = "MyFirstGroup";
+        gotoGroupPage();
+        initGroupCreation();
+        fillGroupForm();
+        submitGroupCreation();
+        clickGroupPageInMessage();
+        selectGroup(groupName);
+        editUpdateGroup();
+        returnToGroupPage();
+        selectGroup(groupName);
+        deleteGroup();
+        returnToGroupPage();
+        logout();
+    }
+
+    private void logout() {
+        wd.findElement(By.linkText("Logout")).click();
+    }
+
+    private void deleteGroup() {
+        wd.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
+    }
+
+    private void clickGroupPageInMessage() {
+        wd.findElement(By.linkText("group page")).click();
+    }
+
+    private void selectGroup(String groupName) {
+        wd.findElement(By.xpath("//input[@title='Select (" + groupName + ")']")).click();
+    }
+
+    private void editUpdateGroup() {
+        wd.findElement(By.xpath("(//input[@name='edit'])[2]")).click();
+        wd.findElement(By.name("group_footer")).click();
+        wd.findElement(By.name("group_footer")).clear();
+        wd.findElement(By.name("group_footer")).sendKeys("This is my first Test with Katalon Recorder!");
+        wd.findElement(By.name("update")).click();
+    }
+
+    private void returnToGroupPage() {
+        wd.findElement(By.linkText("groups")).click();
+    }
+
+    private void submitGroupCreation() {
+        wd.findElement(By.name("submit")).click();
+    }
+
+    private void fillGroupForm() {
+        wd.findElement(By.name("group_name")).click();
+        wd.findElement(By.name("group_name")).clear();
+        wd.findElement(By.name("group_name")).sendKeys("MyFirstGroup");
+        wd.findElement(By.name("group_header")).click();
+        wd.findElement(By.name("group_header")).clear();
+        wd.findElement(By.name("group_header")).sendKeys("First");
+        wd.findElement(By.name("group_footer")).click();
+        wd.findElement(By.name("group_footer")).clear();
+        wd.findElement(By.name("group_footer")).sendKeys("This is my first Test with Katalon Recorder.");
+    }
+
+    private void initGroupCreation() {
+        wd.findElement(By.name("new")).click();
+    }
+
+    private void gotoGroupPage() {
+        wd.findElement(By.linkText("groups")).click();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() throws Exception {
+        wd.quit();
+
+    }
+
+    private boolean isElementPresent(By by) {
+        try {
+            wd.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    private boolean isAlertPresent() {
+        try {
+            wd.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
 
 }
