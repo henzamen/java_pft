@@ -13,3 +13,7 @@ dependencies {
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
 
 }
+
+test {
+    useTestNG()
+}
