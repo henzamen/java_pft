@@ -9,7 +9,7 @@ public class GroupDeletionTests extends TestBase {
         String groupName = "MyFirstGroup";
         app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup(groupName);
-        app.getGroupHelper().deleteGroup();
+        app.getGroupHelper().deleteGroupLower();
         app.getNavigationHelper().returnToGroupPage();
     }
 

@@ -13,22 +13,7 @@ public class ApplicationManager {
     private SessionHelper sessionHelper;
     private GroupHelper groupHelper;
     private NavigationHelper navigationHelper;
-
-    public static void logout() {
-        wd.findElement(By.linkText("Logout")).click();
-    }
-
-    public static void clickGroupPageInMessage() {
-        wd.findElement(By.linkText("group page")).click();
-    }
-
-    public static void editUpdateGroup() {
-        wd.findElement(By.xpath("(//input[@name='edit'])[2]")).click();
-        wd.findElement(By.name("group_footer")).click();
-        wd.findElement(By.name("group_footer")).clear();
-        wd.findElement(By.name("group_footer")).sendKeys("This is my first Test with Katalon Recorder!");
-        wd.findElement(By.name("update")).click();
-    }
+    private ContactHelper contactHelper;
 
     public void init() {
         System.setProperty("webdriver.gecko.driver", "C:\\TestTools\\webdrivers\\geckodriver.exe");
@@ -38,12 +23,19 @@ public class ApplicationManager {
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
+        contactHelper = new ContactHelper(wd);
         sessionHelper.login("admin", "secret");
+    }
+
+    public static void logout() {
+        wd.findElement(By.linkText("Logout")).click();
+
     }
 
     public void stop() {
         wd.quit();
     }
+
 
     private boolean isElementPresent(By by) {
         try {
@@ -54,8 +46,6 @@ public class ApplicationManager {
         }
     }
 
-
-
     public GroupHelper getGroupHelper() {
         return groupHelper;
     }
@@ -63,4 +53,9 @@ public class ApplicationManager {
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
     }
+
+    public ContactHelper getContactHelper() {
+        return contactHelper;
+    }
+
 }
