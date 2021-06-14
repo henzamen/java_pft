@@ -1,10 +1,11 @@
-package ru.stqa.pft.addressbook;
+package ru.stqa.pft.addressbook.tests;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.ContactRequiredData;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +13,7 @@ public class ContactCreationTest {
     private WebDriver wd;
 
     @BeforeMethod(alwaysRun = true)
-    public void setUp() throws Exception {
+    public void setUp() {
         System.setProperty("webdriver.gecko.driver", "C:\\TestTools\\webdrivers\\geckodriver.exe");
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -30,7 +31,7 @@ public class ContactCreationTest {
     }
 
     @Test
-    public void testContactCreation() throws Exception {
+    public void testContactCreation() {
         String name = "Henry";
         String lastName = "Sam";
 
@@ -107,7 +108,7 @@ public class ContactCreationTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() throws Exception {
+    public void tearDown() {
         wd.quit();
 
     }
