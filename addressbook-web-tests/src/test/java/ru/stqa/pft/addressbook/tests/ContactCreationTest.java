@@ -26,4 +26,5 @@ public class ContactCreationTest extends TestBase{
         app.getContactHelper().pressDeleteAndAgree();
     }
 
+
 }

@@ -25,4 +25,5 @@ public class GroupCreationTests extends TestBase {
         app.getGroupHelper().deleteGroupLower();
     }
 
+
 }

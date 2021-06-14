@@ -27,4 +27,5 @@ public class NavigationHelper extends BaseHelper {
         click(By.linkText("home page"));
 
     }
+
 }

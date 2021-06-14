@@ -29,4 +29,5 @@ public class ContactRequiredData {
     public String getEmail() {
         return email;
     }
+
 }
