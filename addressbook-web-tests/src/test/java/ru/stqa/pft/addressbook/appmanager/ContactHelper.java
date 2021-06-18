@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.ContactRequiredData;
 
+
 public class ContactHelper extends BaseHelper{
 
     public ContactHelper(WebDriver wd) {
@@ -26,19 +27,16 @@ public class ContactHelper extends BaseHelper{
 
     }
 
-    public static void clickEditContact(String nameLastName) {
+    public static void clickImgEdit (String nameLastName) {
         click(By.xpath("//input[@title='Select (" + nameLastName + ")']/../..//img[@title='Edit']"));
 
     }
 
-    public static void updateContactField(String nameLastName, By locator, String text) {
-        clickEditContact(nameLastName);
-        type(locator,text);
-        clickUpdate();
+    public static void updateContactFieldByName(String fieldByName, String value) {
+
+        type(By.xpath("//*[@name='" + fieldByName +"']"),value);
 
     }
-
-
 
     public void selectContact(String nameLastName) {
         click(By.xpath("//input[@title='Select (" + nameLastName + ")']"));
@@ -50,7 +48,6 @@ public class ContactHelper extends BaseHelper{
         type(By.name("lastname"), contactRequiredData.getLastname());
         type(By.name("mobile"), contactRequiredData.getMobile());
         type(By.name("email"), contactRequiredData.getEmail());
-        clickSubmit();
 
     }
 

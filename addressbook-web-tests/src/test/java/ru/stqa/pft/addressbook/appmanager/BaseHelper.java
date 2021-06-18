@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 
+
 public class BaseHelper {
     static WebDriver wd;
 
@@ -17,12 +18,7 @@ public class BaseHelper {
     }
 
     public static void clickSubmit() {
-        click(By.xpath("//input[@name='submit']"));
-    }
-
-    public static void clickDetails() {
-        click(By.xpath("//img[@alt='Details']"));
-
+        click(By.xpath("(//input[@name='submit'])[1]"));
     }
 
     public static void click(By locator) {
