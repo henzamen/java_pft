@@ -6,10 +6,10 @@ import ru.stqa.pft.addressbook.appmanager.TestData;
 public class ContactDelitionTests extends TestBase {
 
     @Test
-    public static void testContactDeletion() {
+    public void testContactDeletion() {
 
         app.getNavigationHelper().clickLinkHome();
-        app.getContactHelper().selectContact(TestData.firstName2 + " " + TestData.lastName2);
+        app.getContactHelper().selectFirstContact(TestData.firstName2 + " " + TestData.lastName2);
         app.getContactHelper().pressDeleteAndAgree();
 
     }

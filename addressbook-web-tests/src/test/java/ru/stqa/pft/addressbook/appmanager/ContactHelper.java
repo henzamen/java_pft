@@ -18,7 +18,7 @@ public class ContactHelper extends BaseHelper{
 
     }
 
-    public static void clickDeleteContact() {
+    public void clickDeleteContact() {
         click(By.xpath("//input[@value='Delete']"));
     }
 
@@ -27,19 +27,19 @@ public class ContactHelper extends BaseHelper{
 
     }
 
-    public static void clickImgEdit (String nameLastName) {
-        click(By.xpath("//input[@title='Select (" + nameLastName + ")']/../..//img[@title='Edit']"));
+    public void clickFirstImgEdit(String nameLastName) {
+        click(By.xpath("(//input[@name='selected[]'])[1]/../..//img[@title='Edit']"));
 
     }
 
-    public static void updateContactFieldByName(String fieldByName, String value) {
+    public void updateContactFieldByName(String fieldByName, String value) {
 
         type(By.xpath("//*[@name='" + fieldByName +"']"),value);
 
     }
 
-    public void selectContact(String nameLastName) {
-        click(By.xpath("//input[@title='Select (" + nameLastName + ")']"));
+    public void selectFirstContact(String nameLastName) {
+        click(By.xpath("(//input[@name='selected[]'])[1]"));
 
     }
 
@@ -54,6 +54,10 @@ public class ContactHelper extends BaseHelper{
     public void addNewContact() {
         click(By.linkText("add new"));
 
+    }
+
+    public void submitContact(){
+        clickSubmit();
     }
 
 }

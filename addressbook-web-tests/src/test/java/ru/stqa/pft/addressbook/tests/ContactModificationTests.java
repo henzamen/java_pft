@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.model.ContactRequiredData;
 public class ContactModificationTests extends TestBase {
 
     @Test
-    public static void testContactModification() {
+    public void testContactModification() {
 
         String address = "Voronezh";
         ContactRequiredData contactRequiredDataNew = new ContactRequiredData(
@@ -18,7 +18,7 @@ public class ContactModificationTests extends TestBase {
         );
 
         app.getNavigationHelper().clickLinkHome();
-        app.getContactHelper().clickImgEdit(TestData.fullName);
+        app.getContactHelper().clickFirstImgEdit(TestData.fullName);
         app.getContactHelper().fillContactForm(contactRequiredDataNew);
         app.getContactHelper().updateContactFieldByName("address", address);
         app.getContactHelper().clickUpdate();

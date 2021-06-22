@@ -22,8 +22,8 @@ public class GroupHelper extends BaseHelper {
         click(By.xpath("(//input[@name='delete'])[2]"));
     }
 
-    public void selectGroup(String groupName) {
-        click(By.xpath("//input[@title='Select (" + groupName + ")']"));
+    public void selectFirstGroup() {
+        click(By.xpath("(//input[@name='selected[]'])[1]"));
     }
 
     public void submitGroupCreation() {
