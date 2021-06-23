@@ -10,11 +10,11 @@ public class GroupHelper extends BaseHelper {
         super(wd);
     }
 
-    public static void clickEditUpper() {
+    public void clickEditUpper() {
         click(By.xpath("(//input[@name='edit'])[1]"));
     }
 
-    public static void clickEditLower() {
+    public void clickEditLower() {
         click(By.xpath("(//input[@name='edit'])[2]"));
     }
 

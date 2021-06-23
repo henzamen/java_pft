@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.Test;
-import ru.stqa.pft.addressbook.appmanager.TestData;
 
 public class ContactDelitionTests extends TestBase {
 
@@ -9,7 +8,7 @@ public class ContactDelitionTests extends TestBase {
     public void testContactDeletion() {
 
         app.getNavigationHelper().clickLinkHome();
-        app.getContactHelper().selectFirstContact(TestData.firstName2 + " " + TestData.lastName2);
+        app.getContactHelper().selectFirstContact();
         app.getContactHelper().pressDeleteAndAgree();
 
     }

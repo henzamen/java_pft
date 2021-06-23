@@ -13,11 +13,10 @@ public class TestData {
     public static String lastName1 = "Sam";
     public static String firstName2 = "Heinrich";
     public static String lastName2 = "Zamenhof";
-    public static String fullName = firstName1 + " " + lastName1;
 
     public static final String mobile = "+7473 1234567";
     public static final String email = "hensam@list.ru";
-    public static final String address = "No one knows";
+
 
 }
 

@@ -18,7 +18,7 @@ public class ContactModificationTests extends TestBase {
         );
 
         app.getNavigationHelper().clickLinkHome();
-        app.getContactHelper().clickFirstImgEdit(TestData.fullName);
+        app.getContactHelper().clickFirstImgEdit();
         app.getContactHelper().fillContactForm(contactRequiredDataNew);
         app.getContactHelper().updateContactFieldByName("address", address);
         app.getContactHelper().clickUpdate();

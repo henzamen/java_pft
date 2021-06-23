@@ -27,7 +27,7 @@ public class ContactHelper extends BaseHelper{
 
     }
 
-    public void clickFirstImgEdit(String nameLastName) {
+    public void clickFirstImgEdit() {
         click(By.xpath("(//input[@name='selected[]'])[1]/../..//img[@title='Edit']"));
 
     }
@@ -38,7 +38,7 @@ public class ContactHelper extends BaseHelper{
 
     }
 
-    public void selectFirstContact(String nameLastName) {
+    public void selectFirstContact() {
         click(By.xpath("(//input[@name='selected[]'])[1]"));
 
     }
