@@ -4,10 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+
 public class GroupHelper extends BaseHelper {
 
     public GroupHelper(WebDriver wd) {
         super(wd);
+    }
+
+    public void returnToGroupPage() {
+        click(By.linkText("group page"));
     }
 
     public void clickEditUpper() {
@@ -26,6 +31,11 @@ public class GroupHelper extends BaseHelper {
         click(By.xpath("(//input[@name='selected[]'])[1]"));
     }
 
+    public void selectGroup(String groupName) {
+        wd.findElement(By.xpath("//input[@name='selected[]' and @title = 'Select (" + groupName + ")']")).click();;
+    }
+
+
     public void submitGroupCreation() {
         clickSubmit();
     }
@@ -37,7 +47,7 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void initGroupCreation() {
-        click(By.name("new"));
+        click(By.xpath("(//input[@name='new'])[1]"));
     }
 
     public void initGroupModification() {
@@ -48,4 +58,14 @@ public class GroupHelper extends BaseHelper {
         click(By.name("update"));
     }
 
+    public void createGroup(GroupData group) {
+        initGroupCreation();
+        fillGroupForm(group);
+        submitGroupCreation();
+        returnToGroupPage();
+    }
+
+    public boolean isThereAnyGroup() {
+        return isElementPresent(By.name("selected[]"));
+    }
 }

@@ -5,8 +5,8 @@ public class TestData {
     //Group
     public static String groupName1 = "Group-1";
     public static String groupName2 = "Group-2";
-    public static String headerText = "Header-1";
-    public static String footerText = "Footer-1";
+    public static String headerText1 = "Header-1";
+    public static String footerText2 = "Footer-2";
 
     //Contact
     public static String firstName1 = "Henry";

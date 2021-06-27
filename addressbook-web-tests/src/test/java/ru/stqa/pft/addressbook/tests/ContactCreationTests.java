@@ -8,19 +8,17 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() throws InterruptedException {
-
         app.getContactHelper().addNewContact();
         app.getContactHelper().fillContactForm(
                 new ContactRequiredData(
                         TestData.firstName1,
                         TestData.lastName1,
                         TestData.mobile,
-                        TestData.email
-                )
+                        TestData.email,
+                        TestData.groupName1
+                ),true
         );
         app.getContactHelper().submitContact();
         app.getNavigationHelper().goToHomePage();
-
     }
-
 }
