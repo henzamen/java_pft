@@ -8,6 +8,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
 
+import java.util.concurrent.TimeUnit;
+
 public class ApplicationManager {
     private static WebDriver wd;
 
@@ -32,8 +34,8 @@ public class ApplicationManager {
         } else
             wd = new FirefoxDriver();
 
-        //wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wd.get("http://localhost:8080/addressbook/group.php");
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
+        wd.get("http://localhost:8080/addressbook");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);

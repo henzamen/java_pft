@@ -22,6 +22,10 @@ public class BaseHelper {
         wd.findElement(locator).click();
     }
 
+    public  static void reloadPage() {
+        wd.navigate().refresh();
+    }
+
     public static void type(By locator, String text) {
         wd.findElement(locator).click();
         if (text != null) {
