@@ -6,6 +6,7 @@ import ru.stqa.pft.addressbook.appmanager.BaseHelper;
 import ru.stqa.pft.addressbook.appmanager.TestData;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -14,9 +15,9 @@ public class ContactDelitionTests extends TestBase {
     @Test
     public void testContactDeletion() throws InterruptedException {
 
-        app.getNavigationHelper().clickLinkHome();
+        app.goTo().clickLinkHome();
         if (!app.getContactHelper().isThereAnyContact()) {
-            app.getNavigationHelper().clickLinkHome();
+            app.goTo().clickLinkHome();
             app.getContactHelper().addNewContact();
             app.getContactHelper().fillContactForm(
                     new ContactData(
@@ -28,27 +29,27 @@ public class ContactDelitionTests extends TestBase {
                     ), true
             );
             app.getContactHelper().submitContact();
-            app.getNavigationHelper().goToHomePage();
+            app.goTo().goToHomePage();
         }
 
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContact(before.size() - 1);
         app.getContactHelper().pressDeleteAndAgree();
-        app.getNavigationHelper().clickLinkHome();
+        app.goTo().clickLinkHome();
         BaseHelper.reloadPage();
 
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(),before.size() - 1);
 
         before.remove(before.size() - 1);
-        before.sort((ContactData s1, ContactData s2)->s1.getLastname().compareTo(s2.getLastname()));
-        System.out.println(before);
-        after.sort((ContactData s1, ContactData s2)->s1.getLastname().compareTo(s2.getLastname()));
+        Comparator<? super ContactData> byLastname = (g1, g2) -> g1.getLastname().compareTo(g2.getLastname());
+        before.sort(byLastname);
+        after.sort(byLastname);
         Assert.assertEquals(before, after);
 
-        before.sort((ContactData s1, ContactData s2)->s1.getFirstname().compareTo(s2.getFirstname()));
-        System.out.println(before);
-        after.sort((ContactData s1, ContactData s2)->s1.getFirstname().compareTo(s2.getFirstname()));
+        Comparator<? super ContactData> byFirstname = (g1, g2) -> g1.getFirstname().compareTo(g2.getFirstname());
+        before.sort(byFirstname);
+        after.sort(byFirstname);
         Assert.assertEquals(before, after);
     }
 }

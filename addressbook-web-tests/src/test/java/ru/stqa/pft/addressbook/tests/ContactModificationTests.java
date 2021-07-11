@@ -6,6 +6,7 @@ import ru.stqa.pft.addressbook.appmanager.TestData;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactModificationTests extends TestBase {
@@ -22,11 +23,11 @@ public class ContactModificationTests extends TestBase {
                 null
         );
 
-        app.getNavigationHelper().clickLinkHome();
+        app.goTo().clickLinkHome();
         if (!app.getContactHelper().isThereAnyContact()) {
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData(TestData.groupName2, null, TestData.footerText2));
-            app.getNavigationHelper().clickLinkHome();
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName(TestData.groupName2).withFooter(TestData.footerText2));
+            app.goTo().clickLinkHome();
             app.getContactHelper().addNewContact();
             app.getContactHelper().fillContactForm(
                     new ContactData(
@@ -38,7 +39,7 @@ public class ContactModificationTests extends TestBase {
                     ), true
             );
             app.getContactHelper().submitContact();
-            app.getNavigationHelper().goToHomePage();
+            app.goTo().goToHomePage();
         }
 
         List<ContactData> before = app.getContactHelper().getContactList();
@@ -47,23 +48,19 @@ public class ContactModificationTests extends TestBase {
         app.getContactHelper().fillContactForm(contactDataNew,false);
         app.getContactHelper().updateContactFieldByName("address", address);
         app.getContactHelper().clickUpdate();
-        app.getNavigationHelper().clickLinkHome();
+        app.goTo().clickLinkHome();
 
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(),before.size());
 
-        before.sort((ContactData s1, ContactData s2)->s1.getLastname().compareTo(s2.getLastname()));
-        System.out.println(before);
-        after.sort((ContactData s1, ContactData s2)->s1.getLastname().compareTo(s2.getLastname()));
+        Comparator<? super ContactData> byLastname = (g1, g2) -> g1.getLastname().compareTo(g2.getLastname());
+        before.sort(byLastname);
+        after.sort(byLastname);
         Assert.assertEquals(before, after);
 
-        before.sort((ContactData s1, ContactData s2)->s1.getFirstname().compareTo(s2.getFirstname()));
-        System.out.println(before);
-        after.sort((ContactData s1, ContactData s2)->s1.getFirstname().compareTo(s2.getFirstname()));
+        Comparator<? super ContactData> byFirstname = (g1, g2) -> g1.getFirstname().compareTo(g2.getFirstname());
+        before.sort(byFirstname);
+        after.sort(byFirstname);
         Assert.assertEquals(before, after);
-
-//        app.getNavigationHelper().gotoGroupPage();
-//        app.getGroupHelper().selectGroupName(TestData.groupName2);
-//        app.getGroupHelper().deleteGroupLower();
     }
 }
