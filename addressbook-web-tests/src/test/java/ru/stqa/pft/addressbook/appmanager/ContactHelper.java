@@ -88,8 +88,7 @@ public class ContactHelper extends BaseHelper {
             int contactRowNum = i+1;
             String lastName = wd.findElement(By.xpath("(//tr[@name='entry']/td[2])["+ contactRowNum +"]")).getText();
             String firstName = wd.findElement(By.xpath("(//tr[@name='entry']/td[3])["+ contactRowNum +"]")).getText();
-            ContactData contact = new ContactData(firstName,lastName,null,null,null);
-            contacts.add(contact);
+            contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName));
         }
         return contacts;
     }

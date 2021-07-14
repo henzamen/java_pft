@@ -4,11 +4,36 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-    private final String firstname;
-    private final String lastname;
-    private final String mobile;
-    private final String email;
+    private String firstname;
+    private String lastname;
+    private String mobile;
+    private String email;
     private String group;
+
+    public ContactData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;    //метод возвращает тот же объект, в котором этот метод вызывается
+    }
+
+    public ContactData withMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
 
     @Override
     public String toString() {
@@ -31,13 +56,7 @@ public class ContactData {
         return Objects.hash(firstname, lastname);
     }
 
-    public ContactData(String firstname, String lastname, String mobile, String email, String group) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.mobile = mobile;
-        this.email = email;
-        this.group = group;
-    }
+
 
     public String getFirstname() {
         return firstname;

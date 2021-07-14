@@ -15,13 +15,9 @@ public class ContactModificationTests extends TestBase {
     public void testContactModification() {
 
         String address = "Voronezh";
-        ContactData contactDataNew = new ContactData(
-                TestData.firstName2,
-                TestData.lastName2,
-                null,
-                null,
-                null
-        );
+        ContactData contactDataNew = new ContactData()
+                .withFirstname(TestData.firstName2)
+                .withLastname(TestData.lastName2);
 
         app.goTo().clickLinkHome();
         if (!app.getContactHelper().isThereAnyContact()) {
@@ -29,15 +25,12 @@ public class ContactModificationTests extends TestBase {
             app.group().create(new GroupData().withName(TestData.groupName2).withFooter(TestData.footerText2));
             app.goTo().clickLinkHome();
             app.getContactHelper().addNewContact();
-            app.getContactHelper().fillContactForm(
-                    new ContactData(
-                            TestData.firstName2,
-                            TestData.lastName2,
-                            TestData.mobile,
-                            TestData.email,
-                            TestData.groupName2
-                    ), true
-            );
+
+            app.getContactHelper().fillContactForm(new ContactData()
+                    .withFirstname(TestData.firstName2)
+                    .withLastname(TestData.lastName2)
+                    .withMobile(TestData.mobile)
+                    .withEmail(TestData.email),true);
             app.getContactHelper().submitContact();
             app.goTo().goToHomePage();
         }

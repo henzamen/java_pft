@@ -19,15 +19,10 @@ public class ContactDelitionTests extends TestBase {
         if (!app.getContactHelper().isThereAnyContact()) {
             app.goTo().clickLinkHome();
             app.getContactHelper().addNewContact();
-            app.getContactHelper().fillContactForm(
-                    new ContactData(
-                            TestData.firstName2,
-                            TestData.lastName2,
-                            TestData.mobile,
-                            TestData.email,
-                            null
-                    ), true
-            );
+            app.getContactHelper().fillContactForm(new ContactData()
+                    .withFirstname(TestData.firstName2)
+                    .withLastname(TestData.lastName2)
+                    .withMobile(TestData.mobile).withEmail(TestData.email),true);
             app.getContactHelper().submitContact();
             app.goTo().goToHomePage();
         }
