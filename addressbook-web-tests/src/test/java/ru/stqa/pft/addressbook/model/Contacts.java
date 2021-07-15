@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.model;
 import com.google.common.collect.ForwardingSet;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Contacts extends ForwardingSet<ContactData> {
@@ -21,6 +22,26 @@ public class Contacts extends ForwardingSet<ContactData> {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Contacts that = (Contacts) o;
+        return Objects.equals(delegate, that.delegate);
+    }
+
+    @Override
+    public String toString() {
+        return "Contacts{" +
+                "delegate=" + delegate +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), delegate);
+    }
 
     @Override
     protected Set<ContactData> delegate() {

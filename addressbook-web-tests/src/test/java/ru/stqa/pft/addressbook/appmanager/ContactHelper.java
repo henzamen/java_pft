@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,12 +47,12 @@ public class ContactHelper extends BaseHelper {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void clickEditContact(int index) {
+    public void clickEdit(int index) {
 
         click(By.xpath("(//input[@name='selected[]'])[" + (index + 1) +"]/../..//img[@title='Edit']"));
     }
 
-    public void fillContactForm(ContactData contactData, boolean creation) {
+    public void fillForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobile());
@@ -67,7 +67,7 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
-    public void addNewContact() {
+    public void clickAddNew() {
         click(By.linkText("add new"));
     }
 
@@ -79,10 +79,11 @@ public class ContactHelper extends BaseHelper {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public List<ContactData> getContactList() {
+    public Contacts all() {
+
+        Contacts contacts = new Contacts();
         List<WebElement> contactRows = wd.findElements(By.xpath("//tr[@name='entry']"));
         int contactsSize = contactRows.size();
-        List<ContactData> contacts = new ArrayList<ContactData>();
 
         for (int i =0; i<contactsSize; i++) {
             int contactRowNum = i+1;

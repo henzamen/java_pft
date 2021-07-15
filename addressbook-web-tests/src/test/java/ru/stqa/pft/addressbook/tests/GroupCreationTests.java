@@ -14,10 +14,10 @@ public class GroupCreationTests extends TestBase {
     @Test
     public void testGroupCreation() {
         app.goTo().groupPage();
-        Groups before = app.group().all();
+        Groups before = app.getGroups().all();
         GroupData group = new GroupData().withName(TestData.groupName2).withHeader(TestData.headerText1);
-        app.group().create(group);
-        Groups after = app.group().all();
+        app.getGroups().create(group);
+        Groups after = app.getGroups().all();
         assertThat(after.size(), equalTo(before.size() + 1)); // объект before остается неизменным
         // поэтому можно и здесь и в конце делать проверку
 

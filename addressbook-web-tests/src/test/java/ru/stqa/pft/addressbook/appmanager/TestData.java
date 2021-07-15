@@ -10,7 +10,7 @@ public class TestData {
 
     //Contact
     public static String firstName1 = "Henry";
-    public static String lastName1 = "Sam";
+    public static String lastName1 = "ABC";
     public static String firstName2 = "Heinrich";
     public static String lastName2 = "Zamenhof";
 
