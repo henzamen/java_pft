@@ -5,8 +5,10 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.CapabilityType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,8 +31,10 @@ public class ApplicationManager {
         } else if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
         } else if (browser.equals(BrowserType.EDGE)) {
-            System.setProperty("webdriver.edge.driver","C:\\TestTools\\webdrivers\\msedgedriver.exe");
-            wd = new EdgeDriver();
+            System.setProperty("webdriver.edge.driver", "C:\\TestTools\\webdrivers\\msedgedriver.exe");
+            EdgeOptions edgeOptions = new EdgeOptions();
+            edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+            wd = new EdgeDriver(edgeOptions);
         } else
             wd = new FirefoxDriver();
 

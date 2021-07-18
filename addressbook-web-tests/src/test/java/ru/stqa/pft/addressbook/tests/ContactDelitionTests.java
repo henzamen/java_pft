@@ -18,28 +18,30 @@ public class ContactDelitionTests extends TestBase {
         app.goTo().clickLinkHome();
         if (app.getContacts().all().size() == 0) {
             app.getContacts().clickAddNew();
-            app.getContacts().fillForm(new ContactData()
+            app.getContacts().modify(new ContactData()
                     .withFirstname(TestData.firstName2)
                     .withLastname(TestData.lastName2)
                     .withMobile(TestData.mobile)
-                    .withEmail(TestData.email),true);
+                    .withEmail(TestData.email), true);
             app.getContacts().submitContact();
             app.goTo().goToHomePage();
         }
     }
 
     @Test
-    public void testContactDeletion() {
+    public void testContactDeletion() throws InterruptedException {
         Contacts before = app.getContactHelper().all();
+        int beforeSize = app.getContacts().getContactCount();
         ContactData deletedContact = before.iterator().next();
 
-        app.getContactHelper().selectContact(before.size() - 1);
+        app.getContactHelper().selectContact(beforeSize - 1);
+        app.getContacts().selectContactById(deletedContact.getId());
         app.getContactHelper().pressDeleteAndAgree();
         app.goTo().clickLinkHome();
         BaseHelper.reloadPage();
 
         Contacts after = app.getContactHelper().all();
-        assertThat(after.size(), equalTo(before.size() -1));
+        assertThat(after.size(), equalTo(before.size() - 1));
 
         before.remove(before.size() - 1);
         assertThat(after, equalTo(before.without(deletedContact)));

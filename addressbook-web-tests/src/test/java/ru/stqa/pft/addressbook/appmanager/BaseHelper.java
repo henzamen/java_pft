@@ -11,7 +11,12 @@ public class BaseHelper {
     }
 
     public static void clickUpdate() {
-        click(By.xpath("(//input[@name='update'])[1]"));
+
+        try {
+            click(By.xpath("(//input[@name='update'])[1]"));
+        } catch (Exception e) {
+            click(By.xpath("(//input[@name='submit'])[1]"));
+        }
     }
 
     public static void clickSubmit() {
@@ -22,7 +27,7 @@ public class BaseHelper {
         wd.findElement(locator).click();
     }
 
-    public  static void reloadPage() {
+    public static void reloadPage() {
         wd.navigate().refresh();
     }
 
@@ -60,6 +65,5 @@ public class BaseHelper {
         }
 
     }
-
 
 }

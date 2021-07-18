@@ -21,7 +21,9 @@ public class GroupData {
         return footer;
     }
 
-    public int getValue() { return value; }
+    public int getValue() {
+        return value;
+    }
 
     public GroupData withValue(int value) {
         this.value = value;

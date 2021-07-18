@@ -21,7 +21,6 @@ public class Groups extends ForwardingSet<GroupData> {
 
     }
 
-
     @Override
     protected Set<GroupData> delegate() {
         return delegate;
@@ -38,6 +37,5 @@ public class Groups extends ForwardingSet<GroupData> {
         groups.remove(group); // в эту копию добавляем объект, переданный в качестве параметра
         return groups;            //возвращаем созданую копию с добавленной группой
     }
-
 
 }

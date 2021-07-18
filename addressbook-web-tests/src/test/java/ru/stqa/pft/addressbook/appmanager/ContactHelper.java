@@ -18,9 +18,34 @@ public class ContactHelper extends BaseHelper {
         super(wd);
     }
 
-    public void pressDeleteAndAgree() {
+    public void pressDeleteAndAgree() throws InterruptedException {
         clickDeleteContact();
-        acceptAllert();
+        //   acceptAllert();
+    }
+
+    public Contacts all() {
+        Contacts contacts = new Contacts();
+        List<WebElement> contactCheckBoxes = wd.findElements(By.cssSelector("input[name='selected[]']"));
+        for (WebElement checkBox : contactCheckBoxes) {
+            int idContact = Integer.parseInt(checkBox.getAttribute("id"));
+            WebElement row = checkBox.findElement(By.xpath("./../.."));
+            String lastName = row.findElement(By.xpath("td[2]")).getText();
+            String firstName = row.findElement(By.xpath("td[3]")).getText();
+            contacts.add(new ContactData().withId(idContact).withFirstname(firstName).withLastname(lastName));
+        }
+        return contacts;
+    }
+
+    public Contacts allWithOutId() {
+        Contacts contacts = new Contacts();
+        List<WebElement> contactCheckBoxes = wd.findElements(By.cssSelector("input[name='selected[]']"));
+        for (WebElement checkBox : contactCheckBoxes) {
+            WebElement row = checkBox.findElement(By.xpath("./../.."));
+            String lastName = row.findElement(By.xpath("td[2]")).getText();
+            String firstName = row.findElement(By.xpath("td[3]")).getText();
+            contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName));
+        }
+        return contacts;
     }
 
     public void clickDeleteContact() {
@@ -47,12 +72,15 @@ public class ContactHelper extends BaseHelper {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void clickEdit(int index) {
-
-        click(By.xpath("(//input[@name='selected[]'])[" + (index + 1) +"]/../..//img[@title='Edit']"));
+    public void selectContactById(int id) {
+        initContactModificationById(id);
     }
 
-    public void fillForm(ContactData contactData, boolean creation) {
+    public void clickEdit(int id) {
+        initContactModificationById(id);
+    }
+
+    public void modify(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobile());
@@ -65,6 +93,7 @@ public class ContactHelper extends BaseHelper {
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
+        BaseHelper.clickUpdate();
     }
 
     public void clickAddNew() {
@@ -79,18 +108,15 @@ public class ContactHelper extends BaseHelper {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public Contacts all() {
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
 
-        Contacts contacts = new Contacts();
-        List<WebElement> contactRows = wd.findElements(By.xpath("//tr[@name='entry']"));
-        int contactsSize = contactRows.size();
 
-        for (int i =0; i<contactsSize; i++) {
-            int contactRowNum = i+1;
-            String lastName = wd.findElement(By.xpath("(//tr[@name='entry']/td[2])["+ contactRowNum +"]")).getText();
-            String firstName = wd.findElement(By.xpath("(//tr[@name='entry']/td[3])["+ contactRowNum +"]")).getText();
-            contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName));
-        }
-        return contacts;
+    private void initContactModificationById(int id) {
+        WebElement checkbox = wd.findElement(By.cssSelector("input[id='" + id + "']"));
+        WebElement row = checkbox.findElement(By.xpath("./../.."));
+        List<WebElement> cells = row.findElements(By.tagName("td"));
+        cells.get(7).findElement(By.tagName("a")).click();
     }
 }

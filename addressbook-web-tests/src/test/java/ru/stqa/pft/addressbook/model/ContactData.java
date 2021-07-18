@@ -3,12 +3,20 @@ package ru.stqa.pft.addressbook.model;
 
 import java.util.Objects;
 
+
 public class ContactData {
+
+    private int id;
     private String firstname;
     private String lastname;
     private String mobile;
     private String email;
     private String group;
+
+    public ContactData withId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public ContactData withFirstname(String firstname) {
         this.firstname = firstname;
@@ -38,7 +46,8 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "firstname='" + firstname + '\'' +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
@@ -48,7 +57,7 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
     }
 
     @Override
@@ -56,7 +65,9 @@ public class ContactData {
         return Objects.hash(firstname, lastname);
     }
 
-
+    public int getId() {
+        return id;
+    }
 
     public String getFirstname() {
         return firstname;
@@ -74,5 +85,7 @@ public class ContactData {
         return email;
     }
 
-    public String getGroup() { return group; }
+    public String getGroup() {
+        return group;
+    }
 }
