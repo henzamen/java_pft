@@ -31,14 +31,13 @@ public class ContactHelper extends BaseHelper {
             WebElement row = checkBox.findElement(By.xpath("./../.."));   //точка означает начало поиска с текущего элемента; две точки - к родительскому элементу
             String lastName = row.findElement(By.xpath("td[2]")).getText();
             String firstName = row.findElement(By.xpath("td[3]")).getText();
+            String allPhones = row.findElement(By.xpath("td[6]")).getText();
             String[] phones = row.findElement(By.xpath("td[6]")).getText().split("\n");
             contacts.add(new ContactData()
                     .withId(idContact)
                     .withFirstname(firstName)
                     .withLastname(lastName)
-                    .withHomePhone(phones[0])
-                    .withMobilePhone(phones[1])
-                    .withWorkPhone(phones[2]));
+                    .withAllPhones(allPhones));
         }
         return contacts;
     }
