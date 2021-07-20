@@ -17,12 +17,22 @@ public class GroupCreationTests extends TestBase {
         Groups before = app.getGroups().all();
         GroupData group = new GroupData().withName(TestData.groupName2).withHeader(TestData.headerText1);
         app.getGroups().create(group);
+        assertThat(app.getGroups().count(), equalTo(before.size() + 1));
         Groups after = app.getGroups().all();
-        assertThat(after.size(), equalTo(before.size() + 1)); // объект before остается неизменным
-        // поэтому можно и здесь и в конце делать проверку
-
         assertThat(after, equalTo(
                 before.withAdded(group.withValue(after.stream().mapToInt((g) -> g.getValue()).max().getAsInt()))));
     }
 
+    @Test
+    public void testBadGroupCreation() {
+        app.goTo().groupPage();
+        Groups before = app.getGroups().all();
+        GroupData group = new GroupData().withName("test'2");
+        app.getGroups().create(group);
+        assertThat(app.getGroups().count(), equalTo(before.size()));
+        Groups after = app.getGroups().all();
+        assertThat(after, equalTo(before));
+    }
+
 }
+//хэширование - предварительная проверка условий с помощью более быстрой операции

@@ -12,7 +12,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
-        Contacts before = app.getContactHelper().allWithOutId();
+        Contacts before = app.getContactHelper().allWithoutId();
         ContactData contact = new ContactData()
                 .withFirstname(TestData.firstName1)
                 .withLastname(TestData.lastName1);
@@ -20,7 +20,7 @@ public class ContactCreationTests extends TestBase {
         app.getContactHelper().modify(contact, true);
         app.goTo().goToHomePage();
 
-        Contacts after = app.getContactHelper().allWithOutId();
+        Contacts after = app.getContactHelper().allWithoutId();
         assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, equalTo(before.withAdded(contact
                 .withLastname(contact.getLastname())

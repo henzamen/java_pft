@@ -29,7 +29,6 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         Contacts before = app.getContacts().all();
-        System.out.println("bef0:" + before);
         ContactData modifiedContact = before.iterator().next();
 
         ContactData modContactData = new ContactData()
@@ -37,7 +36,6 @@ public class ContactModificationTests extends TestBase {
                 .withFirstname(TestData.firstName2)
                 .withLastname(TestData.lastName2);
 
-        System.out.println(modContactData.getId());
         app.getContacts().selectContactById(modContactData.getId());
         app.getContacts().modify(modContactData, false);
 

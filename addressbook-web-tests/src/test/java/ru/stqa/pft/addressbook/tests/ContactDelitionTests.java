@@ -34,7 +34,6 @@ public class ContactDelitionTests extends TestBase {
         int beforeSize = app.getContacts().getContactCount();
         ContactData deletedContact = before.iterator().next();
 
-        app.getContactHelper().selectContact(beforeSize - 1);
         app.getContacts().selectContactById(deletedContact.getId());
         app.getContactHelper().pressDeleteAndAgree();
         app.goTo().clickLinkHome();

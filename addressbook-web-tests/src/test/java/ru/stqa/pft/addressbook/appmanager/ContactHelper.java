@@ -28,15 +28,22 @@ public class ContactHelper extends BaseHelper {
         List<WebElement> contactCheckBoxes = wd.findElements(By.cssSelector("input[name='selected[]']"));
         for (WebElement checkBox : contactCheckBoxes) {
             int idContact = Integer.parseInt(checkBox.getAttribute("id"));
-            WebElement row = checkBox.findElement(By.xpath("./../.."));
+            WebElement row = checkBox.findElement(By.xpath("./../.."));   //точка означает начало поиска с текущего элемента; две точки - к родительскому элементу
             String lastName = row.findElement(By.xpath("td[2]")).getText();
             String firstName = row.findElement(By.xpath("td[3]")).getText();
-            contacts.add(new ContactData().withId(idContact).withFirstname(firstName).withLastname(lastName));
+            String[] phones = row.findElement(By.xpath("td[6]")).getText().split("\n");
+            contacts.add(new ContactData()
+                    .withId(idContact)
+                    .withFirstname(firstName)
+                    .withLastname(lastName)
+                    .withHomePhone(phones[0])
+                    .withMobilePhone(phones[1])
+                    .withWorkPhone(phones[2]));
         }
         return contacts;
     }
 
-    public Contacts allWithOutId() {
+    public Contacts allWithoutId() {
         Contacts contacts = new Contacts();
         List<WebElement> contactCheckBoxes = wd.findElements(By.cssSelector("input[name='selected[]']"));
         for (WebElement checkBox : contactCheckBoxes) {
@@ -112,6 +119,22 @@ public class ContactHelper extends BaseHelper {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return  new ContactData()
+                .withId(contact.getId())
+                .withFirstname(firstname)
+                .withLastname(lastname)
+                .withHomePhone(home)
+                .withMobilePhone(mobile)
+                .withWorkPhone(work);
+    }
 
     private void initContactModificationById(int id) {
         WebElement checkbox = wd.findElement(By.cssSelector("input[id='" + id + "']"));
