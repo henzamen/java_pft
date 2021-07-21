@@ -21,7 +21,7 @@ public class ContactDelitionTests extends TestBase {
             app.getContacts().modify(new ContactData()
                     .withFirstname(TestData.firstName2)
                     .withLastname(TestData.lastName2)
-                    .withMobile(TestData.mobile)
+                    .withMobilePhone(TestData.mobile)
                     .withEmail(TestData.email), true);
             app.getContacts().submitContact();
             app.goTo().goToHomePage();
