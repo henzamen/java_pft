@@ -35,4 +35,3 @@ public class GroupCreationTests extends TestBase {
     }
 
 }
-//хэширование - предварительная проверка условий с помощью более быстрой операции

@@ -2,6 +2,8 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.*;
 
+import java.io.File;
+
 
 public class BaseHelper {
     static WebDriver wd;
@@ -32,7 +34,7 @@ public class BaseHelper {
     }
 
     public static void type(By locator, String text) {
-        wd.findElement(locator).click();
+        click(locator);
         if (text != null) {
             String existingText = wd.findElement(locator).getAttribute("value");
             if (!text.equals(existingText)) {
@@ -41,6 +43,14 @@ public class BaseHelper {
             }
         }
     }
+
+    public static void attach(By locator, File file) {
+
+        if (file != null) {
+            wd.findElement(locator).sendKeys(file.getAbsolutePath());
+        }
+    }
+
 
     public static void acceptAllert() {
         Alert alert = wd.switchTo().alert();

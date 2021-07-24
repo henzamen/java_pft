@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
 
+import java.io.File;
 import java.util.Objects;
 
 
@@ -19,6 +20,8 @@ public class ContactData {
     private String email2;
     private String email3;
     private String allEmails;
+    private File photo;
+
 
 
     public ContactData withId(int id) {
@@ -87,6 +90,11 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "ContactData{" +
@@ -111,12 +119,7 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname)
-                && Objects.equals(address, that.address) && Objects.equals(group, that.group)
-                && Objects.equals(homePhone, that.homePhone) && Objects.equals(mobilePhone, that.mobilePhone)
-                && Objects.equals(workPhone, that.workPhone) && Objects.equals(allPhones, that.allPhones)
-                && Objects.equals(email, that.email) && Objects.equals(email2, that.email2)
-                && Objects.equals(email3, that.email3) && Objects.equals(allEmails, that.allEmails);
+        return id == that.id && Objects.equals(firstname, that.firstname);
     }
 
     @Override
@@ -161,5 +164,7 @@ public class ContactData {
     public String getEmail3() { return email3; }
 
     public String getAllEmails() { return allEmails; }
+
+    public File getPhoto() { return photo; }
 
 }

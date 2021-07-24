@@ -33,9 +33,7 @@ public class ContactHelper extends BaseHelper {
             String firstName = row.findElement(By.xpath("td[3]")).getText();
             String address = row.findElement(By.xpath("td[4]")).getText();
             String allPhones = row.findElement(By.xpath("td[6]")).getText();
-            String[] phones = row.findElement(By.xpath("td[6]")).getText().split("\n");
             String allEmails = row.findElement(By.xpath("td[5]")).getText();
-            String[] emails = row.findElement(By.xpath("td[5]")).getText().split("\n");
             contacts.add(new ContactData()
                     .withId(idContact)
                     .withFirstname(firstName)
@@ -63,31 +61,7 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void clickUpdateLower() {
-        click(By.xpath("(//input[@name='update'])[2]"));
-    }
-
-    public void clickFirstImgEdit() {
-        click(By.xpath("(//input[@name='selected[]'])[1]/../..//img[@title='Edit']"));
-    }
-
-    public void updateContactFieldByName(String fieldByName, String value) {
-        type(By.xpath("//*[@name='" + fieldByName + "']"), value);
-    }
-
-    public void selectFirstContact() {
-        click(By.xpath("(//input[@name='selected[]'])[1]"));
-    }
-
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
-
     public void selectContactById(int id) {
-        initContactModificationById(id);
-    }
-
-    public void clickEdit(int id) {
         initContactModificationById(id);
     }
 
@@ -96,6 +70,8 @@ public class ContactHelper extends BaseHelper {
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobilePhone());
         type(By.name("email"), contactData.getEmail());
+        attach(By.name("photo"), contactData.getPhoto());
+
 
         if (creation) {
             if (contactData.getGroup() != null) {
@@ -113,10 +89,6 @@ public class ContactHelper extends BaseHelper {
 
     public void submitContact() {
         clickSubmit();
-    }
-
-    public boolean isThereAnyContact() {
-        return isElementPresent(By.name("selected[]"));
     }
 
     public int getContactCount() {
