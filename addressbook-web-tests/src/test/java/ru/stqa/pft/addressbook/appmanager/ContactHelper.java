@@ -52,7 +52,13 @@ public class ContactHelper extends BaseHelper {
             WebElement row = checkBox.findElement(By.xpath("./../.."));
             String lastName = row.findElement(By.xpath("td[2]")).getText();
             String firstName = row.findElement(By.xpath("td[3]")).getText();
-            contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName));
+            String email = row.findElement(By.xpath("td[5]")).getText();
+            String mobilePhone = row.findElement(By.xpath("td[6]")).getText();
+            contacts.add(new ContactData()
+                    .withFirstname(firstName)
+                    .withLastname(lastName)
+                    .withEmail(email)
+                    .withMobilePhone(mobilePhone));
         }
         return contacts;
     }
@@ -70,7 +76,7 @@ public class ContactHelper extends BaseHelper {
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobilePhone());
         type(By.name("email"), contactData.getEmail());
-        attach(By.name("photo"), contactData.getPhoto());
+        //attach(By.name("photo"), contactData.getPhoto());
 
 
         if (creation) {
