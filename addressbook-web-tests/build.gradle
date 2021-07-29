@@ -17,7 +17,40 @@ dependencies {
     implementation 'com.beust:jcommander:1.48'
     implementation 'com.thoughtworks.xstream:xstream:1.4.17'
 
+
 }
+
+task testGroups(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+}
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+}
+
 test {
     useTestNG()
+}
+
+if (hasProperty('buildScan')) {
+    buildScan {
+        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceAgree = 'yes'
+    }
 }

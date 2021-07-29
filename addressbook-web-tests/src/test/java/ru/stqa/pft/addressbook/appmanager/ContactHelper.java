@@ -18,7 +18,7 @@ public class ContactHelper extends BaseHelper {
         super(wd);
     }
 
-    public void pressDeleteAndAgree() throws InterruptedException {
+    public void pressDeleteAndAgree() {
         clickDeleteContact();
         //   acceptAllert();
     }
@@ -95,10 +95,6 @@ public class ContactHelper extends BaseHelper {
 
     public void submitContact() {
         clickSubmit();
-    }
-
-    public int getContactCount() {
-        return wd.findElements(By.name("selected[]")).size();
     }
 
     public ContactData infoFromEditForm(ContactData contact) {

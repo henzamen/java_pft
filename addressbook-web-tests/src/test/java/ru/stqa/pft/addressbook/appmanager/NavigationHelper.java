@@ -10,10 +10,6 @@ public class NavigationHelper extends BaseHelper {
         super(wd);
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
-
     public void groupPage() {
         if (isElementPresent(By.tagName("h1"))
                 && wd.findElement(By.tagName("h1")).getText().equals("Groups")
@@ -23,10 +19,8 @@ public class NavigationHelper extends BaseHelper {
         click(By.linkText("groups"));
     }
 
-
     public void clickLinkHome() {
         click(By.linkText("home"));
-
     }
 
     public void goToHomePage() {

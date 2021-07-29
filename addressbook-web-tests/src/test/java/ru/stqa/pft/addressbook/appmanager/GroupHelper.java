@@ -16,33 +16,21 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
 
-    public void clickEditUpper() {
-        click(By.xpath("(//input[@name='edit'])[1]"));
-    }
-
-    public void clickEditLower() {
-        click(By.xpath("(//input[@name='edit'])[2]"));
+        try {
+            click(By.linkText("group page"));
+        } catch (Exception e) {
+            click(By.linkText("groups"));
+        }
     }
 
     public void deleteGroupLower() {
         click(By.xpath("(//input[@name='delete'])[2]"));
     }
 
-    public void selectFirstGroup() {
-        click(By.xpath("(//input[@name='selected[]'])[1]"));
-    }
-
     public void selectGroupByValue(int value) {
         click(By.cssSelector("input[value ='" + value + "']"));
     }
-
-    public void selectGroupName(String groupName) {
-        wd.findElement(By.xpath("//input[@name='selected[]' and @title = 'Select (" + groupName + ")']")).click();;
-    }
-
 
     public void submitGroupCreation() {
         clickSubmit();
@@ -88,10 +76,6 @@ public class GroupHelper extends BaseHelper {
         deleteGroupLower();
         groupCache = null;
         returnToGroupPage();
-    }
-
-    public boolean isThereAnyGroup() {
-        return isElementPresent(By.name("selected[]"));
     }
 
     public int count() {

@@ -2,7 +2,6 @@ package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.stqa.pft.addressbook.appmanager.TestData;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
@@ -17,10 +16,11 @@ public class ContactModificationTests extends TestBase {
         if (app.getContacts().all().size() == 0) {
             app.getContacts().clickAddNew();
             app.getContacts().modify(new ContactData()
-                    .withFirstname(TestData.firstName2)
-                    .withLastname(TestData.lastName2)
-                    .withMobilePhone(TestData.mobile)
-                    .withEmail(TestData.email), true);
+                    .withFirstname(app.properties.getProperty("contact2.firstName"))
+                    .withLastname(app.properties.getProperty("contact2.lastName"))
+                    .withMobilePhone(app.properties.getProperty("contact2.mobilePhone"))
+                    .withEmail(app.properties.getProperty("contact2.email"))
+                    , true);
             app.getContacts().submitContact();
             app.goTo().goToHomePage();
         }
@@ -33,8 +33,8 @@ public class ContactModificationTests extends TestBase {
 
         ContactData modContactData = new ContactData()
                 .withId((modifiedContact.getId()))
-                .withFirstname(TestData.firstName2)
-                .withLastname(TestData.lastName2);
+                .withFirstname(app.properties.getProperty("contact2.firstName"))
+                .withLastname(app.properties.getProperty("contact2.lastName"));
 
         app.getContacts().selectContactById(modContactData.getId());
         app.getContacts().modify(modContactData, false);
