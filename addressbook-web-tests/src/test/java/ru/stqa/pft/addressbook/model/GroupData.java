@@ -3,16 +3,33 @@ package ru.stqa.pft.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @XStreamAlias("group")
+@Entity
+@Table(name = "group_list")
 public class GroupData {
 
-    @XStreamOmitField  // нес сохранять в xml следующее поле
+    @XStreamOmitField  // не сохранять в xml следующее поле
+    @Id
+    @Column(name = "group_id")
     private int value = Integer.MAX_VALUE;
+
+    @Column(name = "group_name")
     private String name;
+
+    @Column(name = "group_header")
+    @Type(type = "text")
     private String header;
+
+    @Column(name = "group_footer")
+    @Type(type = "text")
     private String footer;
 
     public String getName() {

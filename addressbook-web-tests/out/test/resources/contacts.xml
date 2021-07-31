@@ -1,0 +1,26 @@
+<list>
+  <contact>
+    <firstname>Firstname0</firstname>
+    <lastname>Lastname0</lastname>
+    <email>email0@mail.ru</email>
+    <mobilePhone>+79999990</mobilePhone>
+  </contact>
+  <contact>
+    <firstname>Firstname1</firstname>
+    <lastname>Lastname1</lastname>
+    <email>email1@mail.ru</email>
+    <mobilePhone>+79999991</mobilePhone>
+  </contact>
+  <contact>
+    <firstname>Firstname2</firstname>
+    <lastname>Lastname2</lastname>
+    <email>email2@mail.ru</email>
+    <mobilePhone>+79999992</mobilePhone>
+  </contact>
+  <contact>
+    <firstname>Firstname3</firstname>
+    <lastname>Lastname3</lastname>
+    <email>email3@mail.ru</email>
+    <mobilePhone>+79999993</mobilePhone>
+  </contact>
+</list>
