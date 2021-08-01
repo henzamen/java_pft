@@ -14,23 +14,25 @@ public class ContactDelitionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().clickLinkHome();
-        if (app.getContacts().all().size() == 0) {
+        if(app.db().contacts().size()==0) {
+            app.goTo().clickLinkHome();
             app.getContacts().clickAddNew();
             app.getContacts().modify(new ContactData()
-                    .withFirstname(app.properties.getProperty("contact2.firstName"))
-                    .withLastname(app.properties.getProperty("contact2.lastName"))
-                    .withMobilePhone(app.properties.getProperty("contact2.mobilePhone"))
-                    .withEmail(app.properties.getProperty("contact2.email"))
-                    , true);
-            app.getContacts().submitContact();
+                            .withFirstname(app.properties.getProperty("contact1.firstName"))
+                            .withLastname(app.properties.getProperty("contact1.lastName"))
+                            .withMobilePhone(app.properties.getProperty("contact1.mobile"))
+                            .withWorkPhone(app.properties.getProperty("contact1.work"))
+                            .withEmail(app.properties.getProperty("contact1.email"))
+                            .withAddress(app.properties.getProperty("contact1.address"))
+                            .withNickname(app.properties.getProperty("contact1.nickname")),
+                    true);
             app.goTo().goToHomePage();
         }
     }
 
     @Test
     public void testContactDeletion() {
-        Contacts before = app.getContactHelper().all();
+        Contacts before = app.db().contacts();
         ContactData deletedContact = before.iterator().next();
 
         app.getContacts().selectContactById(deletedContact.getId());
@@ -38,7 +40,7 @@ public class ContactDelitionTests extends TestBase {
         app.goTo().clickLinkHome();
         BaseHelper.reloadPage();
 
-        Contacts after = app.getContactHelper().all();
+        Contacts after = app.db().contacts();
         assertThat(after.size(), equalTo(before.size() - 1));
 
         before.remove(before.size() - 1);

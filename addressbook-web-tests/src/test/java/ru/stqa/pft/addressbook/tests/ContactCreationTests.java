@@ -45,18 +45,24 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider = "validContacts")
     public void testContactCreation(ContactData contact) {
-        Contacts before = app.getContactHelper().allWithoutId();
+        Contacts before = app.db().contacts();
+        //Contacts before = app.getContactHelper().allWithoutId();
         app.getContactHelper().clickAddNew();
         app.getContactHelper().modify(contact, true);
         app.goTo().goToHomePage();
 
-        Contacts after = app.getContactHelper().allWithoutId();
+        Contacts after = app.db().contacts();
+        //Contacts after = app.getContactHelper().allWithoutId();
         assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, equalTo(before.withAdded(contact
-                .withLastname(contact.getLastname())
+                .withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())
                 .withFirstname(contact.getFirstname())
+                .withLastname(contact.getLastname())
+                .withMobilePhone(contact.getMobilePhone())
+                .withWorkPhone(contact.getWorkPhone())
                 .withEmail(contact.getEmail())
-                .withMobilePhone(contact.getMobilePhone()))));
+                .withAddress(contact.getAddress())
+                .withNickname(contact.getNickname()))));
    }
 
 }

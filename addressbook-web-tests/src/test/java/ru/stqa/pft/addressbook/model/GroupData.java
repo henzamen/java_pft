@@ -73,19 +73,22 @@ public class GroupData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
-        return value == groupData.value && Objects.equals(name, groupData.name);
+        return value == groupData.value && Objects.equals(name, groupData.name)
+                && Objects.equals(header, groupData.header) && Objects.equals(footer, groupData.footer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, name);
+        return Objects.hash(value, name, header, footer);
     }
 
     @Override
     public String toString() {
         return "GroupData{" +
-                "value='" + value + '\'' +
+                "value=" + value +
                 ", name='" + name + '\'' +
+                ", header='" + header + '\'' +
+                ", footer='" + footer + '\'' +
                 '}';
     }
 

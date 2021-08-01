@@ -45,24 +45,6 @@ public class ContactHelper extends BaseHelper {
         return contacts;
     }
 
-    public Contacts allWithoutId() {
-        Contacts contacts = new Contacts();
-        List<WebElement> contactCheckBoxes = wd.findElements(By.cssSelector("input[name='selected[]']"));
-        for (WebElement checkBox : contactCheckBoxes) {
-            WebElement row = checkBox.findElement(By.xpath("./../.."));
-            String lastName = row.findElement(By.xpath("td[2]")).getText();
-            String firstName = row.findElement(By.xpath("td[3]")).getText();
-            String email = row.findElement(By.xpath("td[5]")).getText();
-            String mobilePhone = row.findElement(By.xpath("td[6]")).getText();
-            contacts.add(new ContactData()
-                    .withFirstname(firstName)
-                    .withLastname(lastName)
-                    .withEmail(email)
-                    .withMobilePhone(mobilePhone));
-        }
-        return contacts;
-    }
-
     public void clickDeleteContact() {
         click(By.xpath("//input[@value='Delete']"));
     }
@@ -75,9 +57,10 @@ public class ContactHelper extends BaseHelper {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
         type(By.name("email"), contactData.getEmail());
-        //attach(By.name("photo"), contactData.getPhoto());
-
+        type(By.name("address"), contactData.getAddress());
+        type(By.name("nickname"), contactData.getNickname());
 
         if (creation) {
             if (contactData.getGroup() != null) {

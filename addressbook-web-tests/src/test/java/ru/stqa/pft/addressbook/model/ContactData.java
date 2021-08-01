@@ -3,28 +3,85 @@ package ru.stqa.pft.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
+import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name="addressbook")
+
 public class ContactData {
+
+    //1
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id;
+    //2
+    @Column(name = "firstname")
     private String firstname;
+    //3
+    @Column(name = "lastname")
     private String lastname;
-    private String email;
+    //4
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
-    private String address;
-    private String group;
-    private String homePhone;
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
+
+    //5
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
+    //6
+    @Column(name = "email")
+    @Type(type = "text")
+    private String email;
+    //7
+    @Column(name = "address")
+    @Type(type = "text")
+    private String address;
+    //8
+    @Column(name = "nickname")
+    private String nickname;
+
+    //others = transient
+    @Transient
+    @Column(name = "home")
+    @Type(type = "text")
+    private String homePhone;
+    @Transient
     private String allPhones;
+    @Transient
     private String email2;
+    @Transient
     private String email3;
+    @Transient
     private String allEmails;
-    //private File photo;
+    @Transient
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
+    @Transient
+    private String group;
 
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public ContactData withId(int id) {
         this.id = id;
@@ -41,17 +98,6 @@ public class ContactData {
         return this;    //метод возвращает тот же объект, в котором этот метод вызывается
     }
 
-
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
-    public ContactData withHomePhone(String homePhone) {
-        this.homePhone = homePhone;
-        return this;
-    }
-
     public ContactData withMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
         return this;
@@ -62,8 +108,8 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withAllPhones(String allPhones) {
-        this.allPhones = allPhones;
+    public ContactData withEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -72,10 +118,12 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withEmail(String email) {
-        this.email = email;
+    public ContactData withNickname(String nickname) {
+        this.nickname = nickname;
         return this;
     }
+
+    ////////////////////////////////////////////////
 
     public ContactData withEmail2(String email2) {
         this.email2 = email2;
@@ -92,42 +140,27 @@ public class ContactData {
         return this;
     }
 
-//    public ContactData withPhoto(File photo) {
-//        this.photo = photo;
-//        return this;
-//    }
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
-                ", group='" + group + '\'' +
-                ", homePhone='" + homePhone + '\'' +
-                ", mobilePhone='" + mobilePhone + '\'' +
-                ", workPhone='" + workPhone + '\'' +
-                ", allPhones='" + allPhones + '\'' +
-                ", email='" + email + '\'' +
-                ", email2='" + email2 + '\'' +
-                ", email3='" + email3 + '\'' +
-                ", allEmails='" + allEmails + '\'' +
-                '}';
+    public ContactData withPhoto(File photo) {
+        this.photo = photo.getPath();
+        return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactData that = (ContactData) o;
-        return id == that.id && Objects.equals(firstname, that.firstname);
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstname, lastname, mobilePhone, email, group, homePhone, mobilePhone, workPhone);
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
     }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
+    /////////////////////////////////////////////////
 
     public int getId() {
         return id;
@@ -141,6 +174,26 @@ public class ContactData {
         return lastname;
     }
 
+    public String getMobilePhone() { return mobilePhone; }
+
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public String getEmail() { return email; }
+
+    public String getAddress() { return address; }
+
+    public String getNickname() { return nickname; }
+
+    ////////////////////////////////////////////////
+
+    public String getEmail2() { return email2; }
+
+    public String getEmail3() { return email3; }
+
+    public String getAllEmails() { return allEmails; }
+
     public String getGroup() {
         return group;
     }
@@ -149,24 +202,24 @@ public class ContactData {
         return homePhone;
     }
 
-    public String getMobilePhone() { return mobilePhone; }
-
-    public String getWorkPhone() {
-        return workPhone;
-    }
-
     public String getAllPhones() { return allPhones; }
 
-    public String getAddress() { return address; }
+    public File getPhoto() { return new File(photo); }
 
-    public String getEmail() { return email; }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public String getEmail2() { return email2; }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id && Objects.equals(firstname, that.firstname);
+    }
 
-    public String getEmail3() { return email3; }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, mobilePhone, workPhone, email, address, nickname);
+    }
 
-    public String getAllEmails() { return allEmails; }
-
-    //public File getPhoto() { return photo; }
 
 }
