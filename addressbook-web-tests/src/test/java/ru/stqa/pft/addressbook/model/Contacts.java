@@ -49,15 +49,15 @@ public class Contacts extends ForwardingSet<ContactData> {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), delegate);
+    }
+
+    @Override
     public String toString() {
         return "Contacts{" +
                 "delegate=" + delegate +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), delegate);
     }
 
     @Override
