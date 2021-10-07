@@ -7,6 +7,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class GroupHelper extends BaseHelper {
@@ -96,6 +97,36 @@ public class GroupHelper extends BaseHelper {
             groupCache.add(new GroupData().withValue(value).withName(name));
         }
         return new Groups(groupCache);  //возвращаем копию созданного списка
+    }
+
+    public GroupData randomGroup(Groups groups) {
+        int size = groups.size();
+
+        int currId = 0;
+        int randId = new Random().nextInt(size);
+
+        for (GroupData group : groups) {
+            if (currId == randId) {
+                return group;
+            }
+            currId++;
+        }
+
+        return null;
+    }
+
+    public GroupData getLastGroup(Groups groups) {
+        int lastId = groups.stream().mapToInt((g) -> g.getValue()).max().getAsInt();
+        return getGroupByValue(groups, lastId);
+    }
+
+    public GroupData getGroupByValue(Groups groups, int value) {
+        for (GroupData group : groups) {
+            if (group.getValue() == value) {
+                return group;
+            }
+        }
+        return null;
     }
 
 }

@@ -7,7 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -61,6 +63,11 @@ public class ContactData {
     @Column(name = "nickname")
     private String nickname;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",joinColumns = @JoinColumn(name = "id"),//столбец для данного класса
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
     //others = transient
     @Transient
     @Column(name = "home")
@@ -78,8 +85,7 @@ public class ContactData {
     @Column(name = "photo")
     @Type(type = "text")
     private String photo;
-    @Transient
-    private String group;
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,11 +161,6 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     /////////////////////////////////////////////////
 
     public int getId() {
@@ -194,10 +195,6 @@ public class ContactData {
 
     public String getAllEmails() { return allEmails; }
 
-    public String getGroup() {
-        return group;
-    }
-
     public String getHomePhone() {
         return homePhone;
     }
@@ -205,6 +202,10 @@ public class ContactData {
     public String getAllPhones() { return allPhones; }
 
     public File getPhoto() { return new File(photo); }
+
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -220,6 +221,5 @@ public class ContactData {
     public int hashCode() {
         return Objects.hash(id, firstname, lastname, mobilePhone, workPhone, email, address, nickname);
     }
-
 
 }

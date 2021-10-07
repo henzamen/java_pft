@@ -8,8 +8,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class ContactHelper extends BaseHelper {
@@ -49,7 +51,7 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void selectContactById(int id) {
+    public void modifyContactById(int id) {
         initContactModificationById(id);
     }
 
@@ -63,9 +65,9 @@ public class ContactHelper extends BaseHelper {
         type(By.name("nickname"), contactData.getNickname());
 
         if (creation) {
-            if (contactData.getGroup() != null) {
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-            }
+//            if (contactData.getGroup() != null) {
+//                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+//            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -92,7 +94,7 @@ public class ContactHelper extends BaseHelper {
         String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getText();
         wd.navigate().back();
-        return  new ContactData()
+        return new ContactData()
                 .withId(contact.getId())
                 .withFirstname(firstname)
                 .withLastname(lastname)
@@ -103,7 +105,6 @@ public class ContactHelper extends BaseHelper {
                 .withEmail2(email2)
                 .withEmail3(email3)
                 .withAddress(address);
-
     }
 
     private void initContactModificationById(int id) {
@@ -112,4 +113,73 @@ public class ContactHelper extends BaseHelper {
         List<WebElement> cells = row.findElements(By.tagName("td"));
         cells.get(7).findElement(By.tagName("a")).click();
     }
+
+    private void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
+
+    }
+
+    public Boolean isContactInGroup(ContactData contact, GroupData group) {
+        Boolean contInGr = false;
+        for (GroupData gr : contact.getGroups()) {
+            if (group.getValue() == gr.getValue()) {
+                contInGr = true;
+                break;
+            }
+        }
+        return contInGr;
+    }
+
+
+
+    public ContactData randomContact(Contacts contacts) {
+        int size = contacts.size();
+        int curId = 0;
+        int randId = new Random().nextInt(size);
+
+        for (ContactData contact : contacts) {
+            if (curId == randId) {
+                return contact;
+            }
+            curId++;
+        }
+        return null;
+    }
+
+    public ContactData getLastContact(Contacts contacts) {
+        int lastId = contacts.stream().mapToInt((g) -> g.getId()).max().getAsInt();
+        return getContactById(contacts, lastId);
+    }
+
+    public ContactData getContactById(Contacts contacts, int id) {
+        for (ContactData contact : contacts) {
+            if (contact.getId() == id) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
+
+    public void addToGroup(ContactData contact, GroupData group){
+        selectGroupToShow("[none]"); //обоход ошибки приложения
+        wd.findElement(By.id(String.valueOf(contact.getId()))).click();
+        Select toGroups = new Select (wd.findElement(By.name("to_group")));
+        toGroups.selectByValue(Integer.toString(group.getValue()));
+
+        wd.findElement(By.name("add")).click();
+        wd.findElement(By.linkText("home")).click();
+    }
+
+    public void selectGroupToShow (String valueText) {
+        Select showGroups = new Select (wd.findElement(By.name("group")));
+        showGroups.selectByValue(valueText);
+    }
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        selectGroupToShow(Integer.toString(group.getValue()));
+        selectContactById(contact.getId());
+        wd.findElement(By.name("remove")).click();
+    }
+
 }

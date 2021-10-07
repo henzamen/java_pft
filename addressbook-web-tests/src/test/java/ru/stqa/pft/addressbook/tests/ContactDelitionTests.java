@@ -35,7 +35,7 @@ public class ContactDelitionTests extends TestBase {
         Contacts before = app.db().contacts();
         ContactData deletedContact = before.iterator().next();
 
-        app.getContacts().selectContactById(deletedContact.getId());
+        app.getContacts().modifyContactById(deletedContact.getId());
         app.getContactHelper().pressDeleteAndAgree();
         app.goTo().clickLinkHome();
         BaseHelper.reloadPage();

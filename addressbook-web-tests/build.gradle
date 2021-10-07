@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
 
-    implementation 'org.testng:testng:7.1.0'
+
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     testImplementation group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
@@ -38,6 +38,9 @@ task testGroups(type: Test) {
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
 }
 
 task testContacts(type: Test) {
@@ -49,6 +52,9 @@ task testContacts(type: Test) {
     }
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
     }
 }
 

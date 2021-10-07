@@ -1,0 +1,39 @@
+apply plugin: 'java'
+
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo1.maven.org/maven2" }
+
+}
+
+dependencies {
+
+
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    testImplementation group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+}
+
+test {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+
+//if (hasProperty('buildScan')) {
+//    buildScan {
+//        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+//        termsOfServiceAgree = 'yes'
+//    }
+

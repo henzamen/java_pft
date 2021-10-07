@@ -42,7 +42,7 @@ public class ContactModificationTests extends TestBase {
                 .withAddress(app.properties.getProperty("contact2.address"))
                 .withNickname(app.properties.getProperty("contact2.nickname"));
 
-        app.getContacts().selectContactById(modContactData.getId());
+        app.getContacts().modifyContactById(modContactData.getId());
         app.getContacts().modify(modContactData, false);
 
         app.goTo().clickLinkHome();
