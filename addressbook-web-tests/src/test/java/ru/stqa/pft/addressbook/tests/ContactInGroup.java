@@ -50,9 +50,7 @@ public class ContactInGroup extends TestBase {
         groups = app.db().groups();
         modifiedContact = app.getContacts().getContactById(contacts, targetContactId);
         targetGroup = app.getGroups().getGroupByValue(groups, targetGroupValue);
-
         Assert.assertTrue(app.getContactHelper().isContactInGroup(modifiedContact, targetGroup));
-
     }
 
     @Test
@@ -75,26 +73,33 @@ public class ContactInGroup extends TestBase {
         contacts = app.db().contacts();
         groups = app.db().groups();
         targetContactId = 0;
-        search:
+
         for (ContactData contact : contacts) {
+            if (contact.getGroups().size() < groups.size()) {
+                modifiedContact = contact;
+                targetContactId = contact.getId();
+                break;
+            }
+        }
+
+        if (modifiedContact.getGroups().size() > 0) {
             for (GroupData group : groups) {
-                if (!app.getContacts().isContactInGroup(contact, group)) {
-                    modifiedContact = contact;
+                if (!app.getContactHelper().isContactInGroup(modifiedContact, group)) {
                     targetGroup = group;
-                    targetContactId = contact.getId();
-                    targetGroupValue = group.getValue();
-                    break search;
+                    break;
                 }
             }
-
+        } else {
+            targetGroup = app.getGroups().getLastGroup(groups);
         }
+
         if (targetContactId == 0) {
             createContact();
-            groups = app.db().groups();
             targetGroup = app.getGroups().getLastGroup(groups);
-            targetGroupValue = targetGroup.getValue();
         }
+        targetGroupValue = targetGroup.getValue();
     }
+
 
     private void createContact() {
         app.goTo().clickLinkHome();
@@ -113,20 +118,20 @@ public class ContactInGroup extends TestBase {
         contacts = app.db().contacts();
         groups = app.db().groups();
         targetContactId = 0;
-        search:
-        for (ContactData contact : contacts) {
-            for (GroupData group : groups) {
-                if (app.getContacts().isContactInGroup(contact, group)) {
-                    modifiedContact = contact;
-                    targetGroup = group;
-                    targetContactId = contact.getId();
-                    targetGroupValue = group.getValue();
-                    break search;
-                }
-            }
 
+        for (ContactData contact : contacts) {
+            if (contact.getGroups().size() > 0) {
+                modifiedContact = contact;
+                targetContactId = contact.getId();
+                break;
+            }
         }
-        if (targetContactId == 0) {
+
+        if (targetContactId != 0) {
+            groups = modifiedContact.getGroups();
+            targetGroup = app.getGroups().getLastGroup(groups);
+            targetGroupValue = targetGroup.getValue();
+        } else {
             addContactToGroup();
         }
     }

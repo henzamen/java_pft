@@ -162,7 +162,7 @@ public class ContactHelper extends BaseHelper {
 
 
     public void addToGroup(ContactData contact, GroupData group){
-        selectGroupToShow("[none]"); //обоход ошибки приложения
+        selectGroupToShow("[none]"); //обход ошибки приложения
         wd.findElement(By.id(String.valueOf(contact.getId()))).click();
         Select toGroups = new Select (wd.findElement(By.name("to_group")));
         toGroups.selectByValue(Integer.toString(group.getValue()));
