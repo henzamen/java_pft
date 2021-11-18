@@ -37,11 +37,11 @@ public class HttpSession {
         params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpclient.execute(post);
-        String body = getTextForm(response);
+        String body = getTextFrom(response);
         return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
     }
 
-    private String getTextForm(CloseableHttpResponse response) throws IOException {
+    private String getTextFrom(CloseableHttpResponse response) throws IOException {
         try {
             return EntityUtils.toString(response.getEntity());
         } finally {
@@ -52,7 +52,7 @@ public class HttpSession {
     public boolean isLoggedInAs(String username) throws IOException {
         HttpGet get = new HttpGet(baseurl + "index.php");
         CloseableHttpResponse response = httpclient.execute(get);
-        String body = getTextForm(response);
+        String body = getTextFrom(response);
         return body.contains(String.format("<a href=\"/mantisbt-2.25.2/account_page.php\">%s</a>", username));
     }
 

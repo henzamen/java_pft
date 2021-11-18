@@ -20,12 +20,12 @@ public class ChangePasswordTests extends TestBase{
 
     @Test
     public void testChangePassword() throws IOException {
-        String password = "rootss";
+        String newPwd = "rootss";
         app.changePasswordHelper().resetPassword(userData.get(0));
         List<MailMessage> mailMessages = app.mailHelper().waitForMail(1, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, userData.get(1));
-        app.changePasswordHelper().inputNewPassword(confirmationLink, password);
-        app.newSession().login(userData.get(0), password);
+        app.changePasswordHelper().inputNewPassword(confirmationLink, newPwd);
+        app.newSession().login(userData.get(0), newPwd);
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {

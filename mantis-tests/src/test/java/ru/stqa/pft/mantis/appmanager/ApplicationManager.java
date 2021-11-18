@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-    private Properties properties;
+    private final Properties properties;
     private WebDriver wd;
     private String browser;
 
