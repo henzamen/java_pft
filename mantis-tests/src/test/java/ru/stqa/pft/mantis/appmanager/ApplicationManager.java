@@ -21,7 +21,6 @@ public class ApplicationManager {
     private RegistrationHelper registrationHelper;
     private UserDataHelper changePasswordHelper;
     private MailHelper mailHelper;
-    private SoapHelper soapHelper;
 
 
     public ApplicationManager(String browser) {
@@ -55,9 +54,7 @@ public class ApplicationManager {
         }
     }
 
-    public HttpSession newSession() {
-        return new HttpSession(this);
-    }
+    public HttpSession newSession() {  return new HttpSession(this);   }
 
     public String getProperty(String key) {
         return properties.getProperty(key);
@@ -81,7 +78,6 @@ public class ApplicationManager {
         dbHelper = new DbHelper(this);
         return dbHelper;
     }
-
     public UserDataHelper changePasswordHelper() {
         if (changePasswordHelper == null) {
             changePasswordHelper = new UserDataHelper(this);
@@ -94,11 +90,5 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
-    }
-
-    public SoapHelper soapHelper() {
-        if (soapHelper == null)
-            soapHelper = new SoapHelper(this);
-        return soapHelper;
     }
 }
