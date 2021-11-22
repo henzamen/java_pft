@@ -25,7 +25,7 @@ public class SoapTests extends TestBase {
     }
 
     @Test(priority = 2)
-    public void checkCreateIssue() throws MalformedURLException, ServiceException, RemoteException {
+    public void testCreateIssue() throws MalformedURLException, ServiceException, RemoteException {
         Set<Project> projects = app.soapHelper().getProjects();
         Issue issue = new Issue()
                 .withSummary("Test issue")
@@ -34,5 +34,13 @@ public class SoapTests extends TestBase {
 
         Issue created = app.soapHelper().addIssue(issue);
         assertEquals(issue.getSummary(), created.getSummary());
+    }
+
+    @Test(priority = 3)
+    public void testSomeFeatureWithIssue() {
+        issuesOpenForThisTest.add(33);
+        issuesOpenForThisTest.add(4); // existing issue in Mantis
+        checkIssuesForThisTest();
+        System.out.println("There are no open issues for this test.");
     }
 }

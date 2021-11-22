@@ -39,7 +39,9 @@ public class SoapHelper {
 
     private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
         return new MantisConnectLocator()
-                .getMantisConnectPort(new URL(app.getProperty("mantis.web.baseUrl") + "api/soap/mantisconnect.php"));
+                .getMantisConnectPort(new URL(
+                        app.getProperty("mantis.web.baseUrl") + app.getProperty("mantis.api.soap.mantisconnect"))
+                );
     }
 
     public Issue addIssue(Issue issue) throws ServiceException, MalformedURLException, RemoteException {
@@ -50,11 +52,22 @@ public class SoapHelper {
         issueData.setDescription(issue.getDescription());
         issueData.setProject(new ObjectRef(BigInteger.valueOf(issue.getProject().getId()), issue.getProject().getName()));
         issueData.setCategory(categories[0]);
-        BigInteger isuueId = mc.mc_issue_add(userName, password, issueData);
-        IssueData createdIssueData = mc.mc_issue_get(userName, password, isuueId);
+        BigInteger issueId = mc.mc_issue_add(userName, password, issueData);
+        IssueData createdIssueData = mc.mc_issue_get(userName, password, issueId);
         return new Issue().withId(createdIssueData.getId().intValue())
                 .withSummary(createdIssueData.getSummary()).withDescription(createdIssueData.getDescription())
                 .withProject(new Project().withId(createdIssueData.getProject().getId().intValue())
                         .withName(createdIssueData.getProject().getName()));
+    }
+
+    public Set<Issue> getIssues(Project prj) throws ServiceException, MalformedURLException, RemoteException {
+        MantisConnectPortType mc = getMantisConnect();
+        IssueData[] issues = mc.mc_project_get_issues(
+                userName, password, BigInteger.valueOf(prj.getId()), BigInteger.valueOf(1), BigInteger.valueOf(-1)
+        );
+        return Arrays.asList(issues).stream()
+                .map((p) -> new Issue().withId(p.getId().intValue())
+                        .withDescription(p.getDescription()))
+                .collect(Collectors.toSet());
     }
 }

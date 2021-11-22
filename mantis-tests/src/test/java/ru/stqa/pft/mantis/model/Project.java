@@ -1,8 +1,8 @@
 package ru.stqa.pft.mantis.model;
 
 public class Project {
-    public int id;
-    public String name;
+    private int id;
+    private String name;
 
     public int getId() {
         return id;

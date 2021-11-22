@@ -18,11 +18,17 @@ import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class TestBase {
 
     protected static final ApplicationManager app =
             new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX));
+
+    List<Integer> issuesOpenForThisTest = new ArrayList<Integer>();
+
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws IOException {
@@ -33,7 +39,9 @@ public class TestBase {
 
     public boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = new MantisConnectLocator()
-                .getMantisConnectPort(new URL(app.getProperty("mantis.web.baseUrl") + "api/soap/mantisconnect.php"));
+                .getMantisConnectPort(new URL(
+                        app.getProperty("mantis.web.baseUrl") + app.getProperty("mantis.api.soap.mantisconnect"))
+                );
         IssueData issueMarker = mc.mc_issue_get(
                 app.getProperty("mantis.web.adminLogin"),
                 app.getProperty("mantis.web.adminPassword"), BigInteger.valueOf(issueId));
@@ -45,8 +53,25 @@ public class TestBase {
 
     public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, RemoteException {
         if (isIssueOpen(issueId)) {
+            System.out.println("Test ignored because of issue " + issueId + ".");
             throw new SkipException("Ignored because of issue " + issueId);
         }
+    }
+
+    public void checkIssuesForThisTest() {
+        Stream<Integer> stream = issuesOpenForThisTest.stream();
+        stream
+                .forEach( element -> {
+                    try { skipIfNotFixed(element);
+
+                    } catch (MalformedURLException e) {
+
+                    } catch (ServiceException e) {
+
+                    } catch (RemoteException e) {
+
+                    }
+                });
     }
 
     @AfterSuite(alwaysRun = true)
