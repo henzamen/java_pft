@@ -62,14 +62,13 @@ public class ApplicationManager {
 
         }
 
-        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
-
-
+        wd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);  //неявное ожидание
+        wd.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
         contactHelper = new ContactHelper(wd);
-        wd.get(properties.getProperty("web.baseUrl"));
+
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
