@@ -55,7 +55,7 @@ public class ApplicationManager {
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
-            wd = new RemoteWebDriver(new URL(properties.getProperty("remote.selenium.server")), capabilities);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
