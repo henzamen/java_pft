@@ -55,24 +55,21 @@ public class ApplicationManager {
         } else {
             target = System.getProperty("target","remote");
             properties.load(new FileReader(String.format("src/test/resources/%s.properties",target)));
+
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
-            wd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
         }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
-        wd.get(properties.getProperty("web.baseUrl"));
-        try {
-            wd.wait(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
         contactHelper = new ContactHelper(wd);
+        wd.get(properties.getProperty("web.baseUrl"));
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
