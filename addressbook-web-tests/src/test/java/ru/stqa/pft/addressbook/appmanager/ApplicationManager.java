@@ -57,8 +57,6 @@ public class ApplicationManager {
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
             wd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-            wd.get("http://www.google.com");
-            wd.close();
         }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
