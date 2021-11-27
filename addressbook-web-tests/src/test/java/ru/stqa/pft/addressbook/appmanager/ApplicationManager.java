@@ -59,17 +59,16 @@ public class ApplicationManager {
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
             wd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-            wd.get("https://www.google.com");
-            try {
-                wd.wait(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            wd.close();
+
         }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
         wd.get(properties.getProperty("web.baseUrl"));
+        try {
+            wd.wait(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
