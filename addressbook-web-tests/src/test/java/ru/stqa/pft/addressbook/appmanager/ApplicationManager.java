@@ -54,6 +54,7 @@ public class ApplicationManager {
                 wd = new FirefoxDriver();
         } else {
             target = System.getProperty("target","remote");
+            properties.load(new FileReader(String.format("src/test/resources/%s.properties",target)));
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
