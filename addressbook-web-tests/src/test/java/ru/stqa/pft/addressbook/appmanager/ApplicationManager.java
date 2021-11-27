@@ -53,10 +53,10 @@ public class ApplicationManager {
             } else
                 wd = new FirefoxDriver();
         } else {
+            target = System.getProperty("target","remote");
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
-            wd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);  //неявное ожидание
