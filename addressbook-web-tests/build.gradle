@@ -42,6 +42,7 @@ task testGroups(type: Test) {
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
+    ignoreFailures = true
 }
 
 task testContacts(type: Test) {
