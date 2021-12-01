@@ -7,9 +7,11 @@ repositories {
 
 }
 
+configurations {
+    agent
+}
+
 dependencies {
-
-
     implementation 'dk.tbsalling:aismessages:3.2.2'
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
@@ -20,13 +22,8 @@ dependencies {
     testImplementation 'ch.qos.logback:logback-classic:1.2.7'
     implementation 'mysql:mysql-connector-java:8.0.26'
     implementation 'org.hibernate:hibernate-core:5.6.1.Final'
-
-
-
-
-
-
-
+    agent 'org.aspectj:aspectjweaver:1.9.8.M1'
+    implementation 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
 }
 
 task testGroups(type: Test) {
@@ -46,6 +43,10 @@ task testGroups(type: Test) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
 //    ignoreFailures = true
+}
+
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 
 task testContacts(type: Test) {
